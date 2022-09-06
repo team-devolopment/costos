@@ -1,6 +1,8 @@
 package co.gov.mintic.costos.controller;
 
 import co.gov.mintic.costos.model.Profile;
+import co.gov.mintic.costos.service.IProfileService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -10,49 +12,31 @@ import java.util.List;
 @RequestMapping("/api")
 public class ProfileRestController {
 
+    @Autowired
+    private IProfileService profileService;
+
     @GetMapping("/profile/{id}")
     public Profile findById(@PathVariable long id) {
-        Profile profile = new Profile();
-        profile.setId(id);
-        profile.setImage("lex1@hot");
-        return profile;
+        return this.profileService.findById(id);
     }
 
     @GetMapping("/profile")
     public List<Profile> findByAll() {
-        List<Profile> listProfiles = new ArrayList<>();
-        Profile profile1 = new Profile();
-        profile1.setId(1);
-        profile1.setImage("lex1@hot");
-        Profile profile2 = new Profile();
-        profile2.setId(2);
-        profile2.setImage("lex2@hot");
-        listProfiles.add(profile1);
-        listProfiles.add(profile2);
-        return listProfiles;
+        return this.profileService.findByAll();
     }
 
     @PostMapping("/profile")
     public Profile createRol(@RequestBody Profile profile) {
-        Profile newProfile = new Profile();
-        newProfile.setId(3);
-        newProfile.setImage(profile.getImage());
-        return profile;
+        return this.profileService.createProfile(profile);
     }
 
     @PutMapping("/profile/{id}")
     public Profile updateEmployee(@PathVariable long id, @RequestBody Profile profile) {
-        Profile putProfile = findById(id);
-        putProfile.setId(3);
-        putProfile.setImage(profile.getImage());
-        return putProfile;
+        return this.profileService.updateProfile(id, profile);
     }
-
 
     @DeleteMapping("/profile/{id}")
     public void deleteEmployee(@PathVariable int id) {
-        Profile deleteEmployee = findById(id);
+        this.profileService.deleteProfile(id);
     }
-
-
 }
