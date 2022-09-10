@@ -8,11 +8,11 @@ public interface IProfileService {
 
     public Profile findById(long id);
 
-    public List<Profile> findByAll();
+    public List<Profile> findAll();
 
     public Profile createProfile(Profile profile);
 
     public Profile updateProfile(long id, Profile profile);
 
-    public void deleteProfile(long id);
+    public boolean deleteProfile(long id);
 }

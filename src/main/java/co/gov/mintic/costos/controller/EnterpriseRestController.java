@@ -21,8 +21,8 @@ public class EnterpriseRestController {
     }
 
     @GetMapping("/enterprise")
-    public List<Enterprise> findByAll() {
-        return this.enterpriseService.findByAll();
+    public List<Enterprise> findAll() {
+        return this.enterpriseService.findAll();
     }
 
     @PostMapping("/enterprise")

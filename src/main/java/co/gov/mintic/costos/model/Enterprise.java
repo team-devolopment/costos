@@ -1,47 +1,35 @@
 package co.gov.mintic.costos.model;
 
-
 import lombok.*;
 
+import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
-
+@Entity
+@Table(name = "enterprises")
 public class Enterprise {
 
-    private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_enterprise")
+    private long idEnterprise;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name= "document")
     private String document;
-    private String adress;
-    private List<Employee> employee;
-    private List<Transaction> transaction;
-    private Date createdAT;
-    private Date updateAT;
 
-    public Enterprise(long id, String name, String document, String adress, List<Employee> employee, List<Transaction> transaction, Date createdAT, Date updateAT) {
-        this.id = id;
-        this.name = name;
-        this.document = document;
-        this.adress = adress;
-        this.employee = employee;
-        this.transaction = transaction;
-        this.createdAT = createdAT;
-        this.updateAT = updateAT;
-        employee = new ArrayList<Employee>();
-        transaction = new ArrayList<Transaction>();
-    }
+    @Column (name = "address")
+    private String address;
 
-    public void addTransations(Transaction transactions) {
-        this.transaction.add(transactions);
-    }
+    @Column(name = "create_at")
+    private LocalDate createdAT;
 
-    public void addEmployee(Employee employee) {
-        this.employee.add(employee);
-    }
-
+    @Column(name = "update_at")
+    private LocalDate updateAT;
 }

@@ -22,7 +22,7 @@ public class ProfileRestController {
 
     @GetMapping("/profile")
     public List<Profile> findByAll() {
-        return this.profileService.findByAll();
+        return this.profileService.findAll();
     }
 
     @PostMapping("/profile")

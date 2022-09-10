@@ -2,22 +2,30 @@ package co.gov.mintic.costos.model;
 
 import lombok.*;
 
-import java.util.Date;
-
+import javax.persistence.*;
+import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-
+@Entity
+@Table(name = "profiles")
 public class Profile {
 
-    private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_profile")
+    private long idProfile;
+
+    @Column(name = "image")
     private String image;
+
+    @Column(name = "Phone")
     private String phone;
-    private Employee employee;
-    private Date createdAT;
-    private Date updateAT;
 
+    @Column(name = "created_at")
+    private LocalDate createdAT;
 
+    @Column(name = "update_at")
+    private LocalDate updateAT;
 }

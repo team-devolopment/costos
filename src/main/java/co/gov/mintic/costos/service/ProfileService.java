@@ -1,53 +1,52 @@
 package co.gov.mintic.costos.service;
 
+
+
 import co.gov.mintic.costos.model.Profile;
+import co.gov.mintic.costos.repository.IProfileRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProfileService implements IProfileService {
+    @Autowired
+    private IProfileRepository profileRepository;
     @Override
     public Profile findById(long id) {
-        Profile profile = new Profile();
-        profile.setId(id);
-        profile.setImage("lex1@hot");
-        return profile;
+        Optional<Profile> profile = profileRepository.findById(id);
+        return profile.get();
     }
-
     @Override
-    public List<Profile> findByAll() {
-        List<Profile> listProfiles = new ArrayList<>();
-        Profile profile1 = new Profile();
-        profile1.setId(1);
-        profile1.setImage("lex1@hot");
-        Profile profile2 = new Profile();
-        profile2.setId(2);
-        profile2.setImage("lex2@hot");
-        listProfiles.add(profile1);
-        listProfiles.add(profile2);
-        return listProfiles;
+    public List<Profile> findAll() {
+        return (List<Profile>) this.profileRepository.findAll();
     }
 
     @Override
     public Profile createProfile(Profile profile) {
-        Profile newProfile = new Profile();
-        newProfile.setId(3);
-        newProfile.setImage(profile.getImage());
-        return newProfile;
+        profile.setCreatedAT(LocalDate.now());
+        Profile postProfile = this.profileRepository.save(profile);
+        return postProfile;
     }
 
     @Override
     public Profile updateProfile(long id, Profile profile) {
-        Profile putProfile = findById(id);
-        putProfile.setId(3);
-        putProfile.setImage(profile.getImage());
+        profile.setUpdateAT(LocalDate.now());
+        Profile putProfile = profileRepository.save(profile);
         return putProfile;
     }
 
     @Override
-    public void deleteProfile(long id) {
-        Profile deleteEmployee = findById(id);
+    public boolean deleteProfile(long id) {
+        try {
+            profileRepository.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
